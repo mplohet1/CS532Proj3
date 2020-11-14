@@ -1,0 +1,5 @@
+Command to find information on "Anarchism":
+db.proj3.aggregate(
+	{$unwind:'$mediawiki.page'},
+	{$match:{'mediawiki.page.title':'Anarchism'}}
+)
