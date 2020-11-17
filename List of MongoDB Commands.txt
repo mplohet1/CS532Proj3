@@ -1,5 +1,79 @@
 Command to find information on "Anarchism":
 db.proj3.aggregate(
 	{$unwind:'$mediawiki.page'},
-	{$match:{'mediawiki.page.title':'Anarchism'}}
+	{$match:{'mediawiki.page.title':'Anarchism'}},
+	{$project:{'_id':0,
+		'mediawiki.siteinfo':0,
+		'mediawiki.@xmlns':0,
+		'mediawiki.@xmlns:xsi':0,
+		'mediawiki.@xsi:schemaLocation':0,
+		'mediawiki.@version':0,
+		'mediawiki.@xml:lang':0}}
+)
+
+Command to find pages that redirect to another (and what they redirect to):
+db.proj3.aggregate(
+	{$unwind:'$mediawiki.page'},
+	{$match:{'mediawiki.page.revision.comment': /Redirect/}},
+	{$project:{'_id':0,
+		'mediawiki.siteinfo':0,
+		'mediawiki.@xmlns':0,
+		'mediawiki.@xmlns:xsi':0,
+		'mediawiki.@xsi:schemaLocation':0,
+		'mediawiki.@version':0,
+		'mediawiki.@xml:lang':0,
+		'mediawiki.page.ns':0,
+		'mediawiki.page.id':0,
+		'mediawiki.page.revision':0}}
+)
+
+Command to find all pages that are part of the category "Southern United States"
+db.proj3.aggregate(
+	{$unwind:'$mediawiki.page'},
+	{$match:{'mediawiki.page.revision.text.$': /\[\[Category:Southern United States\]\]/}},
+	{$project:{'_id':0,
+		'mediawiki.siteinfo':0,
+		'mediawiki.@xmlns':0,
+		'mediawiki.@xmlns:xsi':0,
+		'mediawiki.@xsi:schemaLocation':0,
+		'mediawiki.@version':0,
+		'mediawiki.@xml:lang':0,
+		'mediawiki.page.ns':0,
+		'mediawiki.page.id':0,
+		'mediawiki.page.revision':0,
+		'mediawiki.page.redirect':0}}
+)
+
+Command to find all pages that have a link to the page on "Logic"
+db.proj3.aggregate(
+	{$unwind:'$mediawiki.page'},
+	{$match:{'mediawiki.page.revision.text.$': /\[\[logic\]\]/}},
+	{$project:{'_id':0,
+		'mediawiki.siteinfo':0,
+		'mediawiki.@xmlns':0,
+		'mediawiki.@xmlns:xsi':0,
+		'mediawiki.@xsi:schemaLocation':0,
+		'mediawiki.@version':0,
+		'mediawiki.@xml:lang':0,
+		'mediawiki.page.ns':0,
+		'mediawiki.page.id':0,
+		'mediawiki.page.revision':0,
+		'mediawiki.page.redirect':0}}
+)
+
+Command to find all pages that were updated by "Tom.Reding"
+db.proj3.aggregate(
+	{$unwind:'$mediawiki.page'},
+	{$match:{'mediawiki.page.revision.contributor.username': /Tom\.Reding/}},
+	{$project:{'_id':0,
+		'mediawiki.siteinfo':0,
+		'mediawiki.@xmlns':0,
+		'mediawiki.@xmlns:xsi':0,
+		'mediawiki.@xsi:schemaLocation':0,
+		'mediawiki.@version':0,
+		'mediawiki.@xml:lang':0,
+		'mediawiki.page.ns':0,
+		'mediawiki.page.id':0,
+		'mediawiki.page.revision':0,
+		'mediawiki.page.redirect':0}}
 )
