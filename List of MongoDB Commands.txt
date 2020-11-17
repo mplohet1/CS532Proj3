@@ -1,3 +1,5 @@
+Note: These commands are used for querying within MongoDB Compass
+
 Command to find information on "Anarchism":
 db.proj3.aggregate(
 	{$unwind:'$mediawiki.page'},
